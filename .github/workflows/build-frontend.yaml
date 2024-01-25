@@ -1,4 +1,4 @@
-name: Build Backend Docker Image
+name: Build Frontend Docker Image
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}-backend
+          images: ghcr.io/${{ github.repository }}-frontend
           flavor: latest=true
 
       - name: Login to image repository
