@@ -17,6 +17,9 @@ RUN --mount=type=cache,target=/root/.npm \
 # copy over all files to the work directory
 ADD . /app
 
+# make the postbuild.sh executable
+RUN chmod +x /app/postbuild.sh
+
 # In the first build there sometimes is a problem with the
 # stq-card-header-large-font; however this problem typically
 # disappears in the second build

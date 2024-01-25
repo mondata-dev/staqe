@@ -20,7 +20,7 @@ spec:
       serviceAccountName: staqe-backend
       containers:
         - name: staqe
-          image: docker.io/mondata/staqe-backend:latest
+          image: ghcr.io/mondata-dev/staqe-backend:latest
           ports:
             - name: http
               containerPort: 3300
