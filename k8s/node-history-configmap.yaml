@@ -1,0 +1,278 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staqe-node-history
+  labels:
+    app.kubernetes.io/name: staqe-node-history
+    app.kubernetes.io/component: history-node
+data:
+  # Contains the configuration for the albatross client
+  client.toml: |
+    ##############################################################################
+    #
+    # Network specific configuration
+    #
+    ##############################################################################
+
+    [network]
+
+    listen_addresses = [
+            "/ip4/0.0.0.0/tcp/8443/ws",
+    ]
+
+    seed_nodes = [
+            { address = "/dns4/seed1.pos.nimiq-testnet.com/tcp/8443/wss" },
+            {address = "/dns4/validator1.pos.nimiq-testnet.com/tcp/8443/wss"},
+            {address = "/dns4/validator2.pos.nimiq-testnet.com/tcp/8443/wss"}
+    ]
+
+    # Optionally specify address(es) that will be advertised to peers instead of the ones in `listen_addresses`
+    #
+    # This can be used to advertise the public URL and port that peers should connect to, while
+    # `listen_addresses` contains the loopback IP and port that this nodes listens on, which may
+    # not be publicly reachable.
+    advertised_addresses = [
+            "/dns4/history.node.staqe.io/tcp/443/wss",
+    ]
+
+    # User Agent
+    #
+    # String that describes what kind of node is running.
+    #
+    # Default: Generated from version, operating system and processor architecture
+    #user_agent = "core-rs/0.1.0 (native; linux x86_64)"
+
+    ##############################################################################
+    #
+    # TLS network configuration:
+    # - Path to private key file (PEM-encoded ASN.1 in either PKCS#8 or PKCS#1 format)
+    # - Path to a certificate or fullchain file (PEM-encoded X.509 format)
+    #
+    # Ususally, PEM files from SSL providers like Let's Encrypt can be used as-is.
+    #
+    ##############################################################################
+    #[network.tls]
+    #private_key = "./my_private_key.pem"
+    #certificates = "./my_certificate.pem"
+
+    ##############################################################################
+    #
+    # Consensus specific configuration
+    #
+    ##############################################################################
+    [consensus]
+
+    # Specify the network to connect to.
+    # Possible values: "main", "test", "dev", "test-albatross", "dev-albatross"
+    # Default: "dev-albatross"
+    network = "test-albatross"
+    # Specify the sync menchanism according to the client type
+    # Possible values: history, full or light
+    sync_mode = "history"
+
+    ##############################################################################
+    #
+    # Database specific configuration
+    #
+    ##############################################################################
+    #[database]
+
+    # Path to database
+    # Default: ~/.nimiq
+    #path=""
+
+    # Size of mapped memory (in bytes)
+    # Default: 10 MB
+    #size=0
+
+    # Max number of databases
+    # Default: 13
+    #max_dbs=13
+
+    ##############################################################################
+    #
+    # ZK Proof specific configuration
+    #
+    ##############################################################################
+    [zkp]
+
+    # Specify the proof generation capabilities.
+
+    # Defines if the proof generation is active
+    # Default: false
+    prover_active = false
+
+    # Defines the path for the proving keys folders
+    # Default: ".zkp"
+    # prover_keys_path  = "/home/nimiq/.zkp" #defaults to .zkp folder
+
+    ##############################################################################
+    #
+    # Configure the JSON-RPC server.
+    #
+    # To enable, uncomment the section header '[rpc-server]'
+    #
+    #
+    #
+    ##############################################################################
+
+    # Uncomment the following line to enable the RPC server.
+    [rpc-server]
+
+    # Bind the RPC server to specified IP
+    # Default: 127.0.0.1
+    bind="0.0.0.0"
+
+    # TCP-Port to use to create a listening socket for the JSON-RPC server.
+    # Possible values: any valid port number
+    # Default: 8648
+    port = 8648
+
+    # Allow only the RPC methods listed here. All methods are allowed if this is empty.
+    # Example: ["getBlockByNumber", "peerCount"],
+    # Default: []
+    methods = []
+
+    # Declare a username and password required to access the JSON-RPC server.
+    # Default: none
+    #username = "super"
+    # Default: none
+    #password = "secret"
+
+    ##############################################################################
+    #
+    # Metrics-server configuration.
+    # If the section header is uncommented, the server is enabled.
+    #
+    ##############################################################################
+
+    [metrics-server]
+
+    # Bind the metrics server to the specified IP
+    # Default: 127.0.0.1
+    bind = "0.0.0.0"
+
+    # Port to use to create a listening socket for the metrics server.
+    # Possible values: any valid port number
+    # Default: 9100
+    port = 9100
+
+    # Declare a username and password required to access the metrics server.
+    # Default: none
+    #username = "super"
+
+    # Default: none
+    #password = "secret"
+
+    ##############################################################################
+    #
+    # Configure log output.
+    #
+    ##############################################################################
+
+    [log]
+    # Configure global log level.
+    # Possible values: "trace", "debug", "info", "warn", "error"
+    # Default: "info"
+    level = "debug"
+
+    # Define specific log levels for tags.
+    # Default: none
+    #tags = { BaseConsensus = "debug" }
+
+    # Specify whether timestamps should be included for log statements.
+    # Default: true
+    #timestamps = false
+
+    # Save log output to a file.
+    # If not specified, log to stdout.
+    # Default: none
+    #file = "nimiq-client.log"
+
+    # Tokio console
+    # Default: None
+    #tokio_console_bind_address = "127.0.0.1:6669"
+
+    # Loki target
+    # [log.loki]
+
+    # Loki server address
+    # Default: None
+    # url = "http://localhost:3100"
+
+    # Labels set on the log messages. There should only be a finite amount of
+    # different label values, and ideally very few labels. See the Loki
+    # documentation for details:
+    # labels = { host = "mine" }
+
+    # Extra fields added to each log message (e.g. to distinguish runs)
+    # extra_fields = { run = "e2f8e044-0067-4902-914f-261b7f500ba7" }
+
+    ##############################################################################
+    #
+    # Configure log output for the prover process.
+    # This section offers the same options as the [log] section.
+    #
+    ##############################################################################
+
+    # [prover-log]
+    # Configure global log level.
+    # Possible values: "trace", "debug", "info", "warn", "error"
+    # Default: "info"
+    # level = "debug"
+
+    ##############################################################################
+    ##
+    ## Configure mempool
+    ##
+    ###############################################################################
+
+    [mempool]
+
+    # Total size limit of transactions in the mempool (bytes)
+    # Default: 12_000_000 (~ 100000 basic tx)
+    #size_limit = 12_000_000
+
+    # Configure max size of transaction black list
+    # Default: 25000
+    #blacklist_limit = 25000
+
+    # Rules to filter certain transaction
+    #[mempool.filter]
+    #tx_fee = 0
+    #tx_fee_per_byte = 0
+    #tx_value = 0
+    #tx_value_total = 0
+    #contract_fee = 0
+    #contract_fee_per_byte = 0
+    #contract_value = 0
+    #creation_fee = 0
+    #creation_fee_per_byte = 0
+    #creation_value = 0
+    #sender_balance = 0
+    #recipient_balance = 0
+
+    #[validator]
+    #validator_address = "nqvadd"
+    #signing_key = "nqwarm"
+    #fee_key = "nqwarm"
+    #voting_key = "nqhot"
+    #automatic_reactivate = true
+
+  liveness.sh: |
+    #!/bin/bash
+    # create file if not exists
+    touch lastblock.status
+    # get last block number from file
+    lastblock=$(cat lastblock.status)
+    # get current block number from node
+    currentblock=$(nimiq-rpc block-number | grep -oP '[0-9]*')
+    # compare
+    if [ "$lastblock" == "$currentblock" ]; then
+      echo "Last block is $lastblock, current block is $currentblock, exiting [probably stalled]"
+      exit 1
+    else
+      echo "Last block is $lastblock, current block is $currentblock, updating"
+      echo $currentblock > lastblock.status
+      exit 0
+    fi

@@ -1,0 +1,16 @@
+resources:
+  - backend-configmap.yaml
+  - backend-deployment.yaml
+  - backend-rolebinding.yaml
+  - backend-service.yaml
+  - backend-serviceaccount.yaml
+  - create-validators-role.yaml
+  - node-history-configmap.yaml
+  - node-history-ingress.yaml
+  - node-history-service.yaml
+  - node-history-statefulset.yaml
+  - nuxt-deployment.yaml
+  - nuxt-ingress.yaml
+  - nuxt-service.yaml
+
+namespace: staqe

@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: staqe-node-history
+  labels:
+    app.kubernetes.io/name: staqe-node-history
+    app.kubernetes.io/component: history-node
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - history.node.staqe.io
+        - rpc.history.node.staqe.io
+      secretName: staqe-node-history-letsencrypt-tls
+  rules:
+    - host: history.node.staqe.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: staqe-node-history
+                port:
+                  name: consensus
+    - host: rpc.history.node.staqe.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: staqe-node-history
+                port:
+                  name: rpc

@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: staqe-nuxt-ingress
+  labels:
+    app.kubernetes.io/name: staqe
+    app.kubernetes.io/component: nuxt
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/from-to-www-redirect: 'true'
+    cert-manager.io/cluster-issuer: letsencrypt
+    # Put the app behind basic auth until final release
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    nginx.ingress.kubernetes.io/auth-realm: Authentication Required
+spec:
+
+  tls:
+    - hosts:
+        - staqe.io
+      secretName: nuxt-letsencrypt-tls
+  rules:
+    - host: staqe.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: staqe-nuxt
+                port:
+                  number: 3000

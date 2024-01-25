@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: staqe-node-{{VALIDATOR_NAME}}
+  labels:
+    app.kubernetes.io/name: staqe-node-{{VALIDATOR_NAME}}
+    app.kubernetes.io/component: validator-node
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - validator-{{VALIDATOR_NAME}}.{{VALIDATOR_BASE_DOMAIN}}
+      secretName: staqe-node-{{VALIDATOR_NAME}}-letsencrypt-tls
+  rules:
+    - host: validator-{{VALIDATOR_NAME}}.{{VALIDATOR_BASE_DOMAIN}}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: staqe-node-{{VALIDATOR_NAME}}
+                port:
+                  name: consensus

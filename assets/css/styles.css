@@ -1,0 +1,90 @@
+html {
+    --staqe-bg: linear-gradient(to right, #dfe7ea, #dbe6e8, #d7e4e6, #d3e3e3, #d0e1e0, #cfdfdd, #cdddda, #ccdbd7, #ccd8d4, #ccd5d1, #ccd2cf, #cccfcd);
+    --staqe-bg-light-blue: linear-gradient(to top right, #0290E2, #3BB5FB);
+    --staqe-bg-orange: linear-gradient(to bottom, #FD6216, #FC8701);
+    --staqe-bg-light-gray: #c7c9cb;
+    --staqe-green: #ADC3BE;
+
+    --staqe-structure-margins: 1.25rem;
+    --staqe-header-height: 56px;
+    --staqe-full-height-with-header: calc(100vh - var(--staqe-header-height) - (var(--staqe-structure-margins)*4));
+
+    scroll-behavior: smooth;
+}
+
+body, #__nuxt {
+    height: 100vh;
+}
+
+#__nuxt {
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer, main {
+    padding: 0 2rem;
+    margin: var(--staqe-structure-margins) 0;
+}
+
+main {
+    margin-bottom: 12.5rem;
+}
+
+header {
+    margin-top: 0;
+    padding-top: var(--staqe-structure-margins);
+    height: var(--staqe-header-height)
+}
+
+footer {
+    margin-top: auto;
+    margin-bottom: 0;
+
+    background: url('/img/staqe-faded.svg'), var(--staqe-bg-light-gray);
+    background-position: 150% 10%, center;
+    background-size: 60%, contain;
+    background-repeat: no-repeat;
+}
+
+footer a {
+    color: var(--nimiq-blue);
+}
+
+.staqe-bg {
+    background: url('/img/staqe.svg'), var(--staqe-bg);
+    background-position: right;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.staqe-bg-blue {
+    background: url('/img/staqe-faded.svg'), var(--nimiq-blue);
+    background-position: 150% 10%, center;
+    background-size: 60%, contain;
+    background-repeat: no-repeat;
+}
+
+.staqe-bg-light-blue {
+    background: url('/img/staqe-faded.svg'), var(--staqe-bg-light-blue);
+    background-position: 150% 10%, center;
+    background-size: 60%, contain;
+    background-repeat: no-repeat;
+}
+
+.staqe-bg-light-blue.bg-left {
+    background-position: -50% 130%, center;
+}
+
+.staqe-bg-orange {
+    background: url('/img/staqe-faded.svg'), var(--staqe-bg-orange);
+    background-position: 150% 10%, center;
+    background-size: 60%, contain;
+    background-repeat: no-repeat;
+}
+
+/* --- nimiq style overrides --- */
+
+/* override .hidden class from nimiq style to allow usage of .hidden class from tailwind */
+.hidden {
+    visibility: inherit;
+}

@@ -1,0 +1,41 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: staqe-history-node-service-monitor
+  namespace: prometheus
+  labels:
+    app.kubernetes.io/name: staqe-history-node-service-monitor
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: prometheus
+    jobLabel: staqe-history-node-service-monitor
+    release: prometheus
+spec:
+  endpoints:
+    - port: metrics
+  namespaceSelector:
+    matchNames:
+      - staqe
+  selector: 
+    matchLabels:
+      app.kubernetes.io/component: history-node
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: staqe-validator-node-service-monitor
+  namespace: prometheus
+  labels:
+    app.kubernetes.io/name: staqe-validator-node-service-monitor
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: prometheus
+    jobLabel: staqe-validator-node-service-monitor
+    release: prometheus
+spec:
+  endpoints:
+    - port: metrics
+  namespaceSelector:
+    matchNames:
+      - staqe
+  selector: 
+    matchLabels:
+      app.kubernetes.io/component: validator-node

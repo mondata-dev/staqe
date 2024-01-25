@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: staqe-node-history
+  labels:
+    app.kubernetes.io/name: staqe-node-history
+    app.kubernetes.io/component: history-node
+spec:
+  serviceName: staqe-node-history
+  replicas: 1
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: staqe-node-history
+      app.kubernetes.io/component: history-node
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: staqe-node-history
+        app.kubernetes.io/component: history-node
+    spec:
+      containers:
+        - name: staqe-node-history
+          image: ghcr.io/nimiq/core-rs-albatross:latest
+          volumeMounts:
+            - name: storage
+              mountPath: /home/nimiq/.nimiq
+            - name: staqe-node-volume
+              mountPath: /home/nimiq/.nimiq/client.toml
+              subPath: client.toml
+            - name: staqe-node-volume
+              mountPath: /home/nimiq/liveness.sh
+              subPath: liveness.sh
+          ports:
+            - name: consensus
+              containerPort: 8443
+              protocol: TCP
+            - name: rpc
+              containerPort: 8648
+              protocol: TCP
+            - name: metrics
+              containerPort: 9100
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - /home/nimiq/liveness.sh
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: "4Gi"
+              cpu: "2"
+            requests:
+              memory: "4Gi"
+              cpu: "2"
+      initContainers:
+        # The container is required to adjust the permissions of the volume
+        # to allow the nimiq user to write to it.
+        - name: mount-permission-adjustment
+          image: busybox
+          command: [sh, -c, 'chown -R 1001:1001 /home/nimiq/.nimiq']
+          volumeMounts:
+            - name: storage
+              mountPath: /home/nimiq/.nimiq
+      volumes:
+        - name: staqe-node-volume
+          configMap:
+            name: staqe-node-history
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: hcloud-volumes
+        resources:
+          requests:
+            storage: 10G

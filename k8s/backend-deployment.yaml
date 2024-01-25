@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: staqe-backend
+  labels:
+    app.kubernetes.io/name: staqe
+    app.kubernetes.io/component: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: staqe
+      app.kubernetes.io/component: backend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: staqe
+        app.kubernetes.io/component: backend
+    spec:
+      serviceAccountName: staqe-backend
+      containers:
+        - name: staqe
+          image: docker.io/mondata/staqe-backend:latest
+          ports:
+            - name: http
+              containerPort: 3300
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: staqe-backend
+          env: 
+            - name: NODE_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace      
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: '1'

@@ -1,0 +1,93 @@
+/*We're not using the base layer because it normalizes css. We don't want to do that because we're basing on nimiq style.*/
+@tailwind components;
+@layer components {
+
+    .stq-label {
+        @apply text-[2rem] md:text-[2.5rem] font-medium leading-[140%];
+    }
+
+    .stq-uppercase-label {
+        @apply text-[2.5rem] font-medium leading-[140%] opacity-60 uppercase;
+    }
+
+    .stq-p {
+        @apply text-[2rem] md:text-[2.5rem] font-semibold leading-[155.5%] opacity-50;
+    }
+
+    .stq-p-title {
+        @apply text-[3.5rem] font-bold
+    }
+    /*
+        Need to apply on nq-card-header as well for more specificity.
+        .nq-card-header has font styles and may override .stq-card-header-large-font.
+        We want .stq-card-header-large-font to win.
+    */
+    .nq-card-header.stq-card-header-large-font,
+    .stq-card-header-large-font {
+        @apply text-[4rem] md:text-[5rem] font-bold leading-[140%];
+    }
+
+    h1 {
+        @apply text-[5.25rem] md:text-[8.125rem] font-bold;
+    }
+
+    h2 {
+        @apply text-[5rem] font-extrabold uppercase;
+    }
+
+    h3 {
+        @apply text-[5rem] font-bold
+    }
+
+    h4 {
+        @apply text-[3rem] font-medium leading-[140%] opacity-60;
+    }
+
+    h6 {
+        @apply stq-uppercase-label;
+    }
+
+    #home p {
+        @apply text-[2.6rem] md:text-[3rem] font-bold leading-[155.5%] opacity-40;
+    }
+
+    .nq-card .info-caption {
+        @apply stq-label opacity-80;
+    }
+
+    .nq-card label {
+        @apply text-[2.5rem] font-bold opacity-70;
+    }
+
+    .nq-card-header {
+        @apply text-[4rem] font-semibold;
+    }
+
+    .nq-card-body p {
+        @apply stq-p;
+    }
+
+    .input-wrapper label {
+        @apply stq-label tracking-wide opacity-70;
+    }
+
+    .input-wrapper input {
+        @apply font-semibold tracking-wide;
+    }
+
+    .tile-button-header {
+        @apply text-[2.85rem] font-bold leading-[3.75rem];
+    }
+
+    .tile-button-text {
+        @apply text-[2.25rem] font-normal leading-[140%];
+    }
+
+    .progress-text {
+        @apply text-[2rem] font-semibold leading-[155.5%];
+    }
+
+    .progress-caption {
+        @apply text-[1.75rem] font-semibold leading-[155.5%];
+    }
+}

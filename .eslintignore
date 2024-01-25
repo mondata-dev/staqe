@@ -1,0 +1,15 @@
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+dist
+.DS_Store
+*.json
+*.yaml
+*.yml
+
+# somehow this does not work when setting typescript parserOptions.project
+.eslintrc.cjs

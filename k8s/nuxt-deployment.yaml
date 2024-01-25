@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: staqe-nuxt
+  labels:
+    app.kubernetes.io/name: staqe
+    app.kubernetes.io/component: nuxt
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: staqe
+      app.kubernetes.io/component: nuxt
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: staqe
+        app.kubernetes.io/component: nuxt
+    spec:
+      containers:
+        - name: nuxt
+          image: docker.io/mondata/staqe-app:latest
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: BACKEND_BASE_URL
+              value: http://staqe-backend:3300/
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: '1'

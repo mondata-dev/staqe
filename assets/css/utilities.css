@@ -1,0 +1,12 @@
+@tailwind utilities;
+@layer utilities {
+    .staqe-bg-plain-blue {
+        @apply bg-[--nimiq-blue];
+    }
+    .staqe-bg-plain-green {
+        @apply bg-[--staqe-green];
+    }
+    .staqe-bg-plain-light-blue {
+        @apply bg-[--nimiq-light-blue];
+    }
+}

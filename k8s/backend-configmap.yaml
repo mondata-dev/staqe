@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: staqe-backend
+  labels:
+    app.kubernetes.io/name: staqe
+    app.kubernetes.io/component: backend
+data:
+  NODE_BASE_DOMAIN: node.staqe.io
+  PAYMENT_RECEIVER: NQ70 HA7G 4TYD TUVA QH6J 7R4A KRES 6NMB 958J
