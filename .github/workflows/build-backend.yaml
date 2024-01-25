@@ -7,7 +7,10 @@ on:
     branches: [ main ]
   release:
     types: [ created ]
-    
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   build_docker:
