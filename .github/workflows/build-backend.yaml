@@ -33,7 +33,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
         with:
-          context: .
+          context: ./backend
           file: backend/Dockerfile
           push: ${{ github.ref_type == 'tag' }}
           provenance: false
