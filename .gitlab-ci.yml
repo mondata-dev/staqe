@@ -16,9 +16,9 @@ docker-build-backend:
   tags:
     - docker-builds # use runner that can perform docker builds
 
-  image: docker:23.0.1
+  image: docker:25.0.1@sha256:7986efdd91d8049771bb935f27c53e4f040494d3274c5e377e54ca1337151c29
   services:
-    - docker:23.0.1-dind
+    - docker:25.0.1-dind@sha256:7986efdd91d8049771bb935f27c53e4f040494d3274c5e377e54ca1337151c29
 
   variables:
     IMAGE: docker.io/mondata/staqe-backend
@@ -42,9 +42,9 @@ docker-build-frontend:
   tags:
     - docker-builds # use runner that can perform docker builds
 
-  image: docker:23.0.1
+  image: docker:25.0.1@sha256:7986efdd91d8049771bb935f27c53e4f040494d3274c5e377e54ca1337151c29
   services:
-    - docker:23.0.1-dind
+    - docker:25.0.1-dind@sha256:7986efdd91d8049771bb935f27c53e4f040494d3274c5e377e54ca1337151c29
 
   variables:
     IMAGE: docker.io/mondata/staqe-app
