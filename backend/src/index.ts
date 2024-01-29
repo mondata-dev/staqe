@@ -8,9 +8,11 @@ import {
   workerData,
 } from 'node:worker_threads';
 import {
+  STAKING_CONTRACT_ADDRESS,
   convertAddressForRPC,
   getPaymentStatus,
   getTotalRewards,
+  getTransaction,
 } from './blockchain.js';
 import {
   createOrUpdateValidator,
@@ -19,6 +21,8 @@ import {
   upgradeAllValidators,
   upgradeNode,
 } from './nodecontroller.js';
+
+import type { Transaction } from 'nimiq-rpc-client-ts';
 
 const testMode = process.env.NODE_ENV === 'test';
 
@@ -49,6 +53,7 @@ async function newValidator(argobj: any) {
   const validatorWalletAddress = argobj.validator_address;
   const signingSecret = argobj.signingSecret;
   const votingSecret = argobj.votingSecret;
+  const transactionHash = argobj.transactionHash;
 
   // Check payment
   const paymentStatus = await getPaymentStatus(validatorWalletAddress);
@@ -58,6 +63,14 @@ async function newValidator(argobj: any) {
     );
     // return; //curently not enforcing payment as the HUB Api seems to be broken again
   }
+
+  if (!(await checkTransaction(validatorWalletAddress, transactionHash))) {
+    console.log(
+      `Transaction ${transactionHash} not valid. Supposed to be for ${validatorWalletAddress}`,
+    );
+    return;
+  }
+  console.log(`Creating validator ${validatorWalletAddress}`);
 
   await createOrUpdateValidator(
     validatorWalletAddress,
@@ -73,6 +86,16 @@ async function newValidator(argobj: any) {
 async function deleteValidator(argobj: any) {
   // Args
   const validatorWalletAddress = argobj.validator_address;
+
+  const transactionHash = argobj.transactionHash;
+
+  if (!(await checkTransaction(validatorWalletAddress, transactionHash))) {
+    console.log(
+      `Transaction ${transactionHash} not valid. Supposed to be for ${validatorWalletAddress}`,
+    );
+    return;
+  }
+  console.log(`Deleting validator ${validatorWalletAddress}`);
   await removeValidator(validatorWalletAddress);
 }
 
@@ -122,6 +145,39 @@ async function upgradeValidator(argobj: any) {
   const validatorWalletAddress = argobj.validator_address;
   console.log(`Upgrading validator ${validatorWalletAddress}`);
   return await upgradeNode(validatorWalletAddress);
+}
+
+async function checkTransaction(
+  validatorWalletAddress: string,
+  transactionHash: string,
+) {
+  const transaction: Transaction = await getTransaction(transactionHash);
+  if (!transaction) {
+    console.log(
+      `Transaction ${transactionHash} not found. Supposed to be for ${validatorWalletAddress}`,
+    );
+    return false;
+  } else {
+    if (
+      convertAddressForRPC(transaction.from) !==
+      convertAddressForRPC(validatorWalletAddress)
+    ) {
+      console.log(
+        `Transaction ${transactionHash} not from ${validatorWalletAddress}.`,
+      );
+      return false;
+    }
+    if (
+      convertAddressForRPC(transaction.to) !==
+      convertAddressForRPC(STAKING_CONTRACT_ADDRESS)
+    ) {
+      console.log(
+        `Transaction ${transactionHash} not to ${STAKING_CONTRACT_ADDRESS}.`,
+      );
+      return false;
+    }
+    return true;
+  }
 }
 
 interface PostResponse {

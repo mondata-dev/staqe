@@ -127,7 +127,7 @@ export async function removeValidator(address: string) {
       const response = await client.delete(spec);
       console.log(response);
     } catch (e) {
-      console.log('Already deleted');
+      console.log(`${address} already deleted`);
     }
   }
 }
