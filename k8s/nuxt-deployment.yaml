@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: nuxt
-          image: docker.io/mondata/staqe-app:latest
+          image: ghcr.io/mondata-dev/staqe-frontend:latest
           ports:
             - name: http
               containerPort: 3000
