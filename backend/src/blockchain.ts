@@ -3,9 +3,8 @@ import type {
   CallResult,
   PartialBlock,
   Transaction,
-  Validator,
 } from 'nimiq-rpc-client-ts';
-import Client from 'nimiq-rpc-client-ts';
+import { Client } from 'nimiq-rpc-client-ts';
 import { Buffer } from 'node:buffer';
 import { getDollarPriceHistory, lunaToNim } from './pricing.js';
 
@@ -51,19 +50,19 @@ export function convertAddressForRPC(address: string): Address {
  * @param address
  * @returns
  */
-
+/*
 export async function getValidatorStatus(
   address: Address,
 ): Promise<ValidatorStatus> {
   const client = getClient();
   const validator: CallResult<Validator> =
-    await client.validator.byAddress(address);
+    await client.blockchain.getValidatorByAddress(address);
   if (validator.error) return ValidatorStatus.UNKNOWN;
 
   if (validator.data.inactivityFlag) return ValidatorStatus.INACTIVE;
 
   return ValidatorStatus.ACTIVE;
-}
+} */
 
 /**
  * Gets the Block at a specific block number
@@ -73,7 +72,7 @@ export async function getValidatorStatus(
 export async function getBlock(blockNumber: number) {
   const client = getClient();
   const block: CallResult<PartialBlock> =
-    await client.block.getByNumber(blockNumber);
+    await client.blockchain.getBlockByNumber(blockNumber);
   return block.data;
 }
 
@@ -106,7 +105,7 @@ export async function getPaymentStatus(address: Address): Promise<any> {
   // Format extra data: Staqe,NQ61 AE12 FJ43 QNP4 SHBJ F7XJ RH4Y FX3T X2N4
   const client = getClient();
   const payments: CallResult<Transaction[]> =
-    (await client.transaction.getByAddress(paymentReciver)) as any;
+    (await client.blockchain.getTransactionsByAddress(paymentReciver)) as any;
   const valdatorPayemnts = [];
   for (const payment of payments.data) {
     // Change of .data to .recipientData not yet implemented by the rpc client
@@ -146,13 +145,14 @@ export async function getPaymentStatus(address: Address): Promise<any> {
 
 export async function getTotalRewards(validatorAddress: Address) {
   const client = getClient();
-  const validator = await client.validator.byAddress(validatorAddress);
+  const validator =
+    await client.blockchain.getValidatorByAddress(validatorAddress);
   if (validator.error) {
     console.log(`Failed to get Vlaidator ${validatorAddress}`);
     return 0;
   }
   const transactions: CallResult<Transaction[]> =
-    (await client.transaction.getByAddress(
+    (await client.blockchain.getTransactionsByAddress(
       validator.data.rewardAddress,
     )) as CallResult<Transaction[]>;
   let total = 0;
