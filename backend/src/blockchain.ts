@@ -178,3 +178,14 @@ export async function getTransaction(transactionHash: string) {
     await client.transaction.getByHash(transactionHash);
   return tx.data;
 }
+
+/**
+ * Get the current block height
+ * @returns block height
+ */
+export async function getBlockHeight() {
+  const client = getClient();
+  const blockHeight: CallResult<number> =
+    await client.blockchain.getBlockNumber();
+  return blockHeight.data;
+}

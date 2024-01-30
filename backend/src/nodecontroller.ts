@@ -121,9 +121,7 @@ export async function removeValidator(address: string) {
   for (const spec of specs) {
     try {
       // delete if exists
-
       await client.read(spec);
-
       const response = await client.delete(spec);
       console.log(response);
     } catch (e) {

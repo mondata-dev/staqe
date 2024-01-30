@@ -10,6 +10,7 @@ import {
 import {
   STAKING_CONTRACT_ADDRESS,
   convertAddressForRPC,
+  getBlockHeight,
   getPaymentStatus,
   getTotalRewards,
   getTransaction,
@@ -158,6 +159,13 @@ async function checkTransaction(
     );
     return false;
   } else {
+    const blockHeight = await getBlockHeight();
+    if (blockHeight - transaction.blockNumber > 180) {
+      console.log(
+        `Transaction ${transactionHash} too old. Supposed to be for ${validatorWalletAddress}`,
+      );
+      return false;
+    }
     if (
       convertAddressForRPC(transaction.from) !==
       convertAddressForRPC(validatorWalletAddress)
