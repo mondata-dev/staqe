@@ -175,7 +175,7 @@ export async function getTotalRewards(validatorAddress: Address) {
 export async function getTransaction(transactionHash: string) {
   const client = getClient();
   const tx: CallResult<Transaction> =
-    await client.transaction.getByHash(transactionHash);
+    await client.blockchain.getTransactionByHash(transactionHash);
   return tx.data;
 }
 
@@ -185,6 +185,6 @@ export async function getTransaction(transactionHash: string) {
  */
 export async function getBlockHeight() {
   const client = getClient();
-  const blockHeight: CallResult<number> = await client.block.current();
+  const blockHeight: CallResult<number> = await client.blockchain.getBlockNumber();
   return blockHeight.data;
 }
