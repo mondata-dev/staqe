@@ -185,6 +185,7 @@ export async function getTransaction(transactionHash: string) {
  */
 export async function getBlockHeight() {
   const client = getClient();
-  const blockHeight: CallResult<number> = await client.blockchain.getBlockNumber();
+  const blockHeight: CallResult<number> =
+    await client.blockchain.getBlockNumber();
   return blockHeight.data;
 }
