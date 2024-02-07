@@ -15,6 +15,8 @@ const paymentReciver: `NQ${number} ${string}` =
 const period = 1000 * 60 * 60 * 24 * 30; // 30 day
 const periodCost = 10; // $10
 const tolerance = 0.2; // 20% tolerance due to price fluctuations( especially with the coingecko api)
+export const STAKING_CONTRACT_ADDRESS =
+  'NQ77 0000 0000 0000 0000 0000 0000 0000 0001';
 
 export enum ValidatorStatus {
   ACTIVE = 'ACTIVE',
@@ -163,4 +165,27 @@ export async function getTotalRewards(validatorAddress: Address) {
     }
   }
   return total;
+}
+
+/**
+ * Gets the transaction with the given hash
+ * @param transactionHash
+ * @returns
+ */
+export async function getTransaction(transactionHash: string) {
+  const client = getClient();
+  const tx: CallResult<Transaction> =
+    await client.blockchain.getTransactionByHash(transactionHash);
+  return tx.data;
+}
+
+/**
+ * Get the current block height
+ * @returns block height
+ */
+export async function getBlockHeight() {
+  const client = getClient();
+  const blockHeight: CallResult<number> =
+    await client.blockchain.getBlockNumber();
+  return blockHeight.data;
 }

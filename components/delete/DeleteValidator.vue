@@ -30,7 +30,9 @@
       console.log('Delete tx ', tx!.transactionHash);
 
       await useFetch(
-        `/api/validator/delete/${validatorAddress.toUserFriendlyAddress()}`,
+        `/api/validator/delete/${validatorAddress.toUserFriendlyAddress()}?transaction_hash=${
+          tx.transactionHash
+        }`,
       ).catch(() => {
         console.log('Backend did not delete validator');
       });

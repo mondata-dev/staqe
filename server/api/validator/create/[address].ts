@@ -3,7 +3,12 @@ export default defineEventHandler((event) => {
   const query = getQuery(event);
   console.log(query);
   console.log(`Backend starting node for ${address}`);
-  createNode(address, query.signing_key, query.voting_key)
+  createNode(
+    address,
+    query.signing_key,
+    query.voting_key,
+    query.transaction_hash,
+  )
     .then((data) => {
       console.log(data);
     })
@@ -26,6 +31,7 @@ async function createNode(
   address: string,
   signing_key: string,
   votingKey: string,
+  transactionHash: string,
 ) {
   // post address to backend
   const response = await fetch(BACKEND_BASE_URL, {
@@ -39,6 +45,7 @@ async function createNode(
         validator_address: address,
         signingSecret: signing_key,
         votingSecret: votingKey,
+        transactionHash,
       },
     }),
   });

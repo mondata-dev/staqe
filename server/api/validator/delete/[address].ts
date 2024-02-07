@@ -1,7 +1,8 @@
 export default defineEventHandler((event) => {
   const address = decodeURIComponent(event.context.params.address);
+  const query = getQuery(event);
   console.log(`Backend deleting node for ${address}`);
-  deleteNode(address)
+  deleteNode(address, query.transaction_hash)
     .then((data) => {
       console.log(data);
     })
@@ -18,7 +19,7 @@ export default defineEventHandler((event) => {
  * @returns
  */
 
-async function deleteNode(address: string) {
+async function deleteNode(address: string, transactionHash: string) {
   // post address to backend
   const response = await fetch(BACKEND_BASE_URL, {
     method: 'POST',
@@ -29,6 +30,7 @@ async function deleteNode(address: string) {
       method: 'deleteValidator',
       argobj: {
         validator_address: address,
+        transactionHash,
       },
     }),
   });

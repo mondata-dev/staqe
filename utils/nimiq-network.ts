@@ -31,7 +31,7 @@ export async function sendDepositToAddress(address: Address) {
   };
   const signedTx = await hubApi.checkout(options);
   await nimiqClient.waitForConsensusEstablished();
-  await nimiqClient.sendTransaction(signedTx.serializedTx);
+  return await nimiqClient.sendTransaction(signedTx.serializedTx);
 }
 
 export async function payForValidator(
@@ -182,7 +182,7 @@ export async function updateValidatorPayoutAddress(
     appName: 'Staqe',
     transaction: update_validator_transaction.serialize(),
   });
-  await nimiqClient.sendTransaction(
+  return await nimiqClient.sendTransaction(
     signed_update_validator_transaction.serializedTx,
   );
 }

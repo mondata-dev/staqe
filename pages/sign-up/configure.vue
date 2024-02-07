@@ -35,7 +35,7 @@
       throw new Error('reward wallet or keys not set');
 
     const nimiqClient = useNuxtApp().$nimiqClient as Client;
-    const sender = store.validator.address;
+    const sender = store.validator.address!;
 
     if (!requireConsensus) {
       // throw error cannot wait for consensus
@@ -43,8 +43,10 @@
       // additionally await this before proceeding to sign
       await requireConsensus();
     }
+    let tx;
     try {
       signing.value = true;
+
       if (!(await isRegisteredValidator(store.validator.address!))) {
         if (
           !(await hasEnoughFundsForValidatorDeposit(
@@ -60,7 +62,7 @@
         }
       }
 
-      const tx = await registerValidator(
+      tx = await registerValidator(
         store.validator.address!,
         store.validator.rewardAddress!,
         store.validator.warmKey!,
@@ -86,7 +88,9 @@
     console.log('spinning up validator');
     // spin up validator
     await useFetch(
-      `/api/validator/create/${sender.toUserFriendlyAddress()}?signing_key=${store.validator.warmKey!.toHex()}&voting_key=${store.validator.hotKey!.toHex()}`,
+      `/api/validator/create/${sender.toUserFriendlyAddress()}?signing_key=${store.validator.warmKey!.toHex()}&voting_key=${store.validator.hotKey!.toHex()}&transaction_hash=${
+        tx.transactionHash
+      }`,
     );
 
     console.log('checking validator up');
