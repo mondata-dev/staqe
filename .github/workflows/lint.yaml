@@ -1,0 +1,29 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ['*']
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_docker:
+    runs-on: ubuntu-22.04
+    name: Build & publish docker image
+    steps:
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.11'
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci --cache .npm --prefer-offline
+      - name: prettier-check
+        run: npm run prettier-check
+      - name: lint
+        run: npm run lint -- --quiet
