@@ -125,7 +125,7 @@ export async function registerValidator(
   });
 
   return await nimiqClient.sendTransaction(
-    signed_validator_transaction.serializedTx,
+    signed_validator_transaction[0].serializedTx,
   );
 }
 
@@ -183,7 +183,7 @@ export async function updateValidatorPayoutAddress(
     transaction: update_validator_transaction.serialize(),
   });
   return await nimiqClient.sendTransaction(
-    signed_update_validator_transaction.serializedTx,
+    signed_update_validator_transaction[0].serializedTx,
   );
 }
 
@@ -218,7 +218,7 @@ export async function retireValidator(validatorAddress: Address) {
   });
 
   return await nimiqClient.sendTransaction(
-    signed_retire_validator_transaction.serializedTx,
+    signed_retire_validator_transaction[0].serializedTx,
   );
 }
 
@@ -252,7 +252,7 @@ export async function deleteValidator(validatorAddress: Address) {
   });
 
   return await nimiqClient.sendTransaction(
-    signed_delete_validator_transaction.serializedTx,
+    signed_delete_validator_transaction[0].serializedTx,
   );
 }
 
