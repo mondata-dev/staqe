@@ -11,7 +11,8 @@
     },
     {
       "matchDatasources": ["docker"],
-      "pinDigests": true
+      "pinDigests": true,
+      "automerge": true
     }
   ]
 }
