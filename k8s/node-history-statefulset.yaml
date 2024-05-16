@@ -54,8 +54,8 @@ spec:
               memory: "4Gi"
               cpu: "2"
             requests:
-              memory: "4Gi"
-              cpu: "2"
+              memory: "2Gi"
+              cpu: "1"
       initContainers:
         # The container is required to adjust the permissions of the volume
         # to allow the nimiq user to write to it.
