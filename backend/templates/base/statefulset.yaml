@@ -54,7 +54,7 @@ spec:
               memory: "4Gi"
               cpu: "3"
             requests:
-              memory: 128Mi
+              memory: 400Mi
               cpu: 500m
       initContainers:
         # The container is required to adjust the permissions of the volume
