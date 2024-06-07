@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@nimiq/core-web": "2.0.0-alpha.21.0",
+    "@nimiq/core-web": "2.0.0-alpha.21.1",
     "@nimiq/hub-api": "https://gitpkg.now.sh/nimiq/hub/client?b9001ae6cbb7345f9a924ff89ef117781537e6f2",
     "@nimiq/style": "^0.8.5",
     "@nimiq/vue3-components": "github:nimiq/vue3-components#build/full",
@@ -32,6 +32,6 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.6"
+    "prettier-plugin-tailwindcss": "^0.6.0"
   }
 }
