@@ -1,5 +1,5 @@
 # use node 20 alpine image as build image
-FROM node:22-alpine@sha256:609a983bfbc262ec900efca2d7e2df721065a264a8c7aa288a8383531e47dc8c
+FROM node:22-alpine@sha256:df46071ae175bc2c0468ae58e32f00ed6c9779eb70112cdf0d2ccf85035bc7ff
 
 # create work directory in app folder
 WORKDIR /app
