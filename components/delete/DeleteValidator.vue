@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useNuxtApp } from '#app';
-  import type { Address, Client } from '@nimiq/core-web';
+  import type { Address, Client } from '@nimiq/core';
   import { LoadingSpinner } from '@nimiq/vue3-components';
 
   const { validatorAddress } = defineProps<{

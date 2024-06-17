@@ -1,6 +1,6 @@
 // store.js
 
-import type { Address, BLSKeyPair, KeyPair } from '@nimiq/core-web';
+import type { Address, BLSKeyPair, KeyPair } from '@nimiq/core';
 
 export interface Validator {
   address?: Address;

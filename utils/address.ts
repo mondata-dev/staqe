@@ -1,4 +1,4 @@
-import { Address } from '@nimiq/core-web';
+import { Address } from '@nimiq/core';
 import { getHubAPI } from './hub';
 
 /**

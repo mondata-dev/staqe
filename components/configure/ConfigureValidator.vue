@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import type { Address } from '@nimiq/core-web';
-  import { BLSKeyPair, KeyPair } from '@nimiq/core-web';
+  import type { Address } from '@nimiq/core';
+  import { BLSKeyPair, KeyPair } from '@nimiq/core';
   import { DownloadIcon, KeysIcon } from '@nimiq/vue3-components';
 
   const { address, rewardAddress, hotKey, warmKey, disabled } = defineProps<{

@@ -1,4 +1,4 @@
-import type { ConsensusState } from '@nimiq/core-web';
+import type { ConsensusState } from '@nimiq/core';
 import { establishConsensus, initClient } from '~/plugins/nimiq/nFunctions';
 
 export default defineNuxtPlugin({

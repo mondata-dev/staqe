@@ -6,8 +6,8 @@
 -->
 
 <script setup lang="ts">
-  import type { Client, ConsensusState, PlainValidator } from '@nimiq/core-web';
-  import { Address } from '@nimiq/core-web';
+  import type { Client, ConsensusState, PlainValidator } from '@nimiq/core';
+  import { Address } from '@nimiq/core';
   import { CloseButton, LoadingSpinner } from '@nimiq/vue3-components';
   import { SERVICE_PRICE_USD } from '~/utils/nimiq-network';
 

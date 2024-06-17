@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       plugins: () => [wasm(), topLevelAwait()],
     },
     optimizeDeps: {
-      exclude: ['@nimiq/core-web'],
+      exclude: ['@nimiq/core'],
     },
   },
 });

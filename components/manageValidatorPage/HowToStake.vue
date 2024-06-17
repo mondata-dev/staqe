@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { Address } from '@nimiq/core-web';
+  import type { Address } from '@nimiq/core';
 
   const props = defineProps<{
     validatorAddress: Address;

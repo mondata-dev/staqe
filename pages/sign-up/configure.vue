@@ -2,7 +2,7 @@
   import { LoadingSpinner } from '@nimiq/vue3-components';
 
   import { useNuxtApp } from '#app';
-  import type { Client } from '@nimiq/core-web';
+  import type { Client } from '@nimiq/core';
 
   definePageMeta({
     middleware: defineNuxtRouteMiddleware(async (to, from) => {

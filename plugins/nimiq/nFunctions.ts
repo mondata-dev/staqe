@@ -1,5 +1,5 @@
 // Import the package from the /web path:
-import { Client, ClientConfiguration } from '@nimiq/core-web';
+import { Client, ClientConfiguration } from '@nimiq/core';
 
 export async function initClient(): Promise<Client> {
   // Load and initialize the WASM file

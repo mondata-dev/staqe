@@ -1,4 +1,4 @@
-import type { Client, ConsensusState } from '@nimiq/core-web';
+import type { Client, ConsensusState } from '@nimiq/core';
 import { useNuxtApp } from '#app';
 
 export function useConsensus() {
