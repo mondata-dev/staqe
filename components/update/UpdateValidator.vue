@@ -2,8 +2,8 @@
   import { LoadingSpinner } from '@nimiq/vue3-components';
 
   import { useNuxtApp } from '#app';
-  import type { Client } from '@nimiq/core-web';
-  import { Address } from '@nimiq/core-web';
+  import type { Client } from '@nimiq/core';
+  import { Address } from '@nimiq/core';
   import type { Validator } from '~/utils/store';
 
   const {

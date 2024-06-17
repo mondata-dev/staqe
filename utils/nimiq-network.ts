@@ -1,10 +1,10 @@
-import type { Client, PublicKey } from '@nimiq/core-web';
+import type { Client, PublicKey } from '@nimiq/core';
 import {
   Address,
   BLSKeyPair,
   KeyPair,
   TransactionBuilder,
-} from '@nimiq/core-web';
+} from '@nimiq/core';
 import { nimToLuna } from './currency';
 import { getHubAPI } from './hub';
 
