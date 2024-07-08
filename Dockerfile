@@ -1,5 +1,5 @@
 # use node 20 alpine image as build image
-FROM node:22.3.0-alpine3.19@sha256:9af472b2578996eb3d6affbcb82fdee6f086da2c43121e75038a4a70317f784f as build
+FROM node:22.4.0-alpine3.19@sha256:138d0b5f22718a61ceb6a6d306050fbdb599c35f4bb472bc996e540b14cd76ed as build
 
 # create work directory in app folder
 WORKDIR /app
@@ -26,7 +26,7 @@ RUN chmod +x /app/postbuild.sh
 RUN npm run build || npm run build
 
 #---------------------------------------------
-FROM node:22.3.0-alpine3.19@sha256:9af472b2578996eb3d6affbcb82fdee6f086da2c43121e75038a4a70317f784f as run
+FROM node:22.4.0-alpine3.19@sha256:138d0b5f22718a61ceb6a6d306050fbdb599c35f4bb472bc996e540b14cd76ed as run
 
 WORKDIR /app
 
