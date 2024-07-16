@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@nimiq/core": "2.0.0-next.23.0",
-    "@nimiq/hub-api": "https://gitpkg.now.sh/nimiq/hub/client?717409b522389597d2ffc0101e0a4f9b5bd25c31",
+    "@nimiq/hub-api": "https://gitpkg.now.sh/nimiq/hub/client?4dcb9b0b794a9901a1bfa098710375c5d26f9c00",
     "@nimiq/style": "^0.8.5",
     "@nimiq/vue3-components": "github:nimiq/vue3-components#build/full",
     "@nuxtjs/tailwindcss": "^6.8.0",
