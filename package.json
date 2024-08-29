@@ -24,7 +24,7 @@
     "vite-plugin-wasm": "3.3.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.43.1",
+    "@antfu/eslint-config": "^3.0.0",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@types/node": "^20",
     "@typescript-eslint/parser": "^6.8.0",
