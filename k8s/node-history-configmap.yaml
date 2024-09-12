@@ -94,13 +94,13 @@ data:
     # ZK Proof specific configuration
     #
     ##############################################################################
-    [zkp]
+    # [zkp]
 
     # Specify the proof generation capabilities.
 
     # Defines if the proof generation is active
     # Default: false
-    prover_active = false
+    # prover_active = false
 
     # Defines the path for the proving keys folders
     # Default: ".zkp"
