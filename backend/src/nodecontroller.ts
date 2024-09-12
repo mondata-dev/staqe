@@ -1,6 +1,6 @@
 import * as k8s from '@kubernetes/client-node';
 import * as yaml from 'js-yaml';
-import { Client } from 'nimiq-rpc-client-ts';
+import { NimiqRPCClient as Client } from 'nimiq-rpc-client-ts';
 import * as crypto from 'node:crypto';
 import { promises as fs } from 'node:fs';
 

@@ -4,7 +4,7 @@ import type {
   PartialBlock,
   Transaction,
 } from 'nimiq-rpc-client-ts';
-import { Client } from 'nimiq-rpc-client-ts';
+import { NimiqRPCClient as Client } from 'nimiq-rpc-client-ts';
 import { Buffer } from 'node:buffer';
 import { getDollarPriceHistory, lunaToNim } from './pricing.js';
 
