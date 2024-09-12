@@ -104,17 +104,17 @@ data:
     # ZK Proof specific configuration
     #
     ##############################################################################
-    [zkp]
+    # [zk-prover]
 
     # Specify the proof generation capabilities.
 
     # Defines if the proof generation is active
     # Default: false
-    prover_active = false
+    # prover_active = false
 
     # Defines the path for the proving keys folders
     # Default: ".zkp"
-    prover_keys_path  = "/home/nimiq/.zkp" #defaults to .zkp folder
+    # prover_keys_path  = "/home/nimiq/.zkp" #defaults to .zkp folder
 
     ##############################################################################
     #
@@ -268,7 +268,7 @@ data:
     fee_key = "nqwarm"
     voting_key = "nqhot"
     automatic_reactivate = true
-  
+
   liveness.sh: |
         #!/bin/bash
         # create file if not exists
