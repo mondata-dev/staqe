@@ -46,7 +46,7 @@ spec:
               command:
                 - bash
                 - /home/nimiq/liveness.sh
-            initialDelaySeconds: 300
+            initialDelaySeconds: 36000 # 10 hours
             periodSeconds: 10
             timeoutSeconds: 5
           resources:
@@ -78,4 +78,4 @@ spec:
         storageClassName: hcloud-volumes
         resources:
           requests:
-            storage: 10G
+            storage: 50G

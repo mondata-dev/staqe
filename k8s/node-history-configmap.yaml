@@ -94,7 +94,7 @@ data:
     # ZK Proof specific configuration
     #
     ##############################################################################
-    # [zkp]
+    # [zk-prover]
 
     # Specify the proof generation capabilities.
 
