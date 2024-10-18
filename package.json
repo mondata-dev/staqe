@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@nimiq/core": "2.0.0-next.24.2",
+    "@nimiq/core": "2.0.0-next.rc.0",
     "@nimiq/hub-api": "https://gitpkg.now.sh/nimiq/hub/client?ef9dc2859f4482d62ab3809a5b3605ab3c6bbbed",
     "@nimiq/style": "^0.8.5",
     "@nimiq/vue3-components": "github:nimiq/vue3-components#build/full",
