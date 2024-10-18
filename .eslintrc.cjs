@@ -19,6 +19,9 @@ module.exports = {
     'vue/no-empty-component-block': 'error',
     'vue/no-multiple-template-root': 'off', // does not apply to vue3
 
+    //new rule, for now inore
+    '@typescript-eslint/no-throw-literal': 'off',
+
     // the following rules conflict with prettier and are therefore disabled
     '@typescript-eslint/indent': 'off',
     '@typescript-eslint/semi': 'off',

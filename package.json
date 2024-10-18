@@ -14,8 +14,8 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@nimiq/core": "2.0.0-next.24.2",
-    "@nimiq/hub-api": "https://gitpkg.now.sh/nimiq/hub/client?ef9dc2859f4482d62ab3809a5b3605ab3c6bbbed",
+    "@nimiq/core": "2.0.0-next.rc.0",
+    "@nimiq/hub-api": "https://gitpkg.now.sh/nimiq/hub/client?86ab7be481d0ebc049669940ca189de49b1f949b",
     "@nimiq/style": "^0.8.5",
     "@nimiq/vue3-components": "github:nimiq/vue3-components#build/full",
     "@nuxtjs/tailwindcss": "^6.8.0",
@@ -27,10 +27,12 @@
     "@antfu/eslint-config": "^0.43.1",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.6.0"
   }
