@@ -127,11 +127,15 @@ export async function getPaymentStatus(address: Address): Promise<any> {
   let paymentEndTS = 0;
   for (const payment of valdatorPayemnts) {
     if (payment.timestamp > paymentEndTS) {
-      const addedTime = await getPaymentTime(payment.value, Number(payment.timestamp));
-      paymentEndTS =  Number(payment.timestamp) + addedTime;
+      const addedTime = await getPaymentTime(
+        payment.value,
+        Number(payment.timestamp),
+      );
+      paymentEndTS = Number(payment.timestamp) + addedTime;
     } else {
       paymentEndTS =
-        paymentEndTS + (await getPaymentTime(payment.value,  Number(payment.timestamp)));
+        paymentEndTS +
+        (await getPaymentTime(payment.value, Number(payment.timestamp)));
     }
   }
   return paymentEndTS;
