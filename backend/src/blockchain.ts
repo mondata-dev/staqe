@@ -29,7 +29,7 @@ export enum ValidatorStatus {
  * @returns
  */
 function getClient() {
-  const url = new URL('https://rpc-testnet.nimiqcloud.com/');
+  const url = new URL('https://rpc.history.node.staqe.io/');
   return new Client(url);
 }
 
