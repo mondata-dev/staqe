@@ -84,7 +84,7 @@ export async function getBlock(blockNumber: number) {
  * @returns
  */
 
-async function getPaymentTime(amount: number, timestamp: number) {
+async function getPaymentTime(amount: number, timestamp: bigint) {
   const price = await getDollarPriceHistory(timestamp);
   const transactionValue = lunaToNim(amount) * price;
   if (transactionValue > periodCost * (1 - tolerance)) {
@@ -95,6 +95,7 @@ async function getPaymentTime(amount: number, timestamp: number) {
 
   return 0;
 }
+
 
 /**
  * Checks all past payments and determines how long the validator has been paid for
@@ -124,18 +125,18 @@ export async function getPaymentStatus(address: Address): Promise<any> {
     }
   }
   valdatorPayemnts.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
-  let paymentEndTS = 0;
+  let paymentEndTS : bigint = 0;
   for (const payment of valdatorPayemnts) {
     if (payment.timestamp > paymentEndTS) {
       const addedTime = await getPaymentTime(
         payment.value,
-        Number(payment.timestamp),
+        payment.timestamp,
       );
-      paymentEndTS = Number(payment.timestamp) + addedTime;
+      paymentEndTS = payment.timestamp + addedTime;
     } else {
       paymentEndTS =
         paymentEndTS +
-        (await getPaymentTime(payment.value, Number(payment.timestamp)));
+        (await getPaymentTime(payment.value, payment.timestamp));
     }
   }
   return paymentEndTS;

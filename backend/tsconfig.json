@@ -3,7 +3,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "target": "es2018",
+    "target": "es2020",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "importHelpers": true,
