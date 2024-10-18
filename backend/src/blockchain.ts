@@ -84,16 +84,16 @@ export async function getBlock(blockNumber: number) {
  * @returns
  */
 
-async function getPaymentTime(amount: number, timestamp: number) {
+async function getPaymentTime(amount: number, timestamp: bigint) {
   const price = await getDollarPriceHistory(timestamp);
   const transactionValue = lunaToNim(amount) * price;
   if (transactionValue > periodCost * (1 - tolerance)) {
-    return period;
+    return BigInt(period);
   } else {
     console.log('Payment not close to tolerance. Not processing. ');
   }
 
-  return 0;
+  return 0n;
 }
 
 /**
@@ -124,18 +124,14 @@ export async function getPaymentStatus(address: Address): Promise<any> {
     }
   }
   valdatorPayemnts.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
-  let paymentEndTS = 0;
+  let paymentEndTS: bigint = 0n;
   for (const payment of valdatorPayemnts) {
     if (payment.timestamp > paymentEndTS) {
-      const addedTime = await getPaymentTime(
-        payment.value,
-        Number(payment.timestamp),
-      );
-      paymentEndTS = Number(payment.timestamp) + addedTime;
+      const addedTime = await getPaymentTime(payment.value, payment.timestamp);
+      paymentEndTS = payment.timestamp + addedTime;
     } else {
       paymentEndTS =
-        paymentEndTS +
-        (await getPaymentTime(payment.value, Number(payment.timestamp)));
+        paymentEndTS + (await getPaymentTime(payment.value, payment.timestamp));
     }
   }
   return paymentEndTS;
