@@ -96,7 +96,6 @@ async function getPaymentTime(amount: number, timestamp: bigint) {
   return 0;
 }
 
-
 /**
  * Checks all past payments and determines how long the validator has been paid for
  * @param address
@@ -125,18 +124,14 @@ export async function getPaymentStatus(address: Address): Promise<any> {
     }
   }
   valdatorPayemnts.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
-  let paymentEndTS : bigint = 0;
+  let paymentEndTS: bigint = 0;
   for (const payment of valdatorPayemnts) {
     if (payment.timestamp > paymentEndTS) {
-      const addedTime = await getPaymentTime(
-        payment.value,
-        payment.timestamp,
-      );
+      const addedTime = await getPaymentTime(payment.value, payment.timestamp);
       paymentEndTS = payment.timestamp + addedTime;
     } else {
       paymentEndTS =
-        paymentEndTS +
-        (await getPaymentTime(payment.value, payment.timestamp));
+        paymentEndTS + (await getPaymentTime(payment.value, payment.timestamp));
     }
   }
   return paymentEndTS;
