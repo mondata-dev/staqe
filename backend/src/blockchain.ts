@@ -105,7 +105,7 @@ export async function getPaymentStatus(address: Address): Promise<any> {
   // Format extra data: Staqe,NQ61 AE12 FJ43 QNP4 SHBJ F7XJ RH4Y FX3T X2N4
   const client = getClient();
   const payments: CallResult<Transaction[]> =
-    (await client.blockchain.getTransactionsByAddress(paymentReciver)) as any;
+    (await client.blockchain.getTransactionsByAddress(paymentReciver,{startAt:null,max:null})) as any;
   const valdatorPayemnts = [];
   for (const payment of payments.data) {
     // Change of .data to .recipientData not yet implemented by the rpc client
