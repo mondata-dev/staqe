@@ -24,6 +24,10 @@ export enum ValidatorStatus {
   UNKNOWN = 'UNKNOWN',
 }
 
+function convertNimiqTimestamp(timestamp: bigint): number {
+  return Number(timestamp);
+}
+
 /**
  * Gets the RPC client to retrieve data from the blockchain
  * @returns
@@ -84,16 +88,16 @@ export async function getBlock(blockNumber: number) {
  * @returns
  */
 
-async function getPaymentTime(amount: number, timestamp: bigint) {
+async function getPaymentTime(amount: number, timestamp: number) {
   const price = await getDollarPriceHistory(timestamp);
   const transactionValue = lunaToNim(amount) * price;
   if (transactionValue > periodCost * (1 - tolerance)) {
-    return BigInt(period);
+    return period;
   } else {
     console.log('Payment not close to tolerance. Not processing. ');
   }
 
-  return 0n;
+  return 0;
 }
 
 /**
@@ -127,14 +131,14 @@ export async function getPaymentStatus(address: Address): Promise<any> {
     }
   }
   valdatorPayemnts.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
-  let paymentEndTS: bigint = 0n;
+  let paymentEndTS: number = 0;
   for (const payment of valdatorPayemnts) {
-    if (payment.timestamp > paymentEndTS) {
-      const addedTime = await getPaymentTime(payment.value, payment.timestamp);
-      paymentEndTS = payment.timestamp + addedTime;
+    if (convertNimiqTimestamp(payment.timestamp) > paymentEndTS) {
+      const addedTime = await getPaymentTime(payment.value, convertNimiqTimestamp(payment.timestamp));
+      paymentEndTS = convertNimiqTimestamp(payment.timestamp) + addedTime;
     } else {
       paymentEndTS =
-        paymentEndTS + (await getPaymentTime(payment.value, payment.timestamp));
+        paymentEndTS + (await getPaymentTime(payment.value, convertNimiqTimestamp(payment.timestamp)));
     }
   }
   return paymentEndTS;
