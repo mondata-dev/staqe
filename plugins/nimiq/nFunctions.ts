@@ -13,7 +13,7 @@ export async function initClient(): Promise<Client> {
 
   // Specify the seed nodes to initially connect to:
   // Optional, default is ['/dns4/seed1.pos.nimiq-testnet.com/tcp/8443/wss']
-  config.seedNodes(['/dns4/seed1.pos.nimiq-testnet.com/tcp/8443/wss']);
+  config.seedNodes(['/dns4/history.node.staqe.io/tcp/443/wss']);
 
   // Change the lowest log level that is output to the console:
   // Optional, default is 'info'
