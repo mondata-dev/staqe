@@ -8,8 +8,6 @@ export function nimToLuna(amount: number): number {
   return Math.round(amount * 1e5);
 }
 
-
-
 /**
  * Returns the price given a timestamp. TODO: INACCURATE as coingecko only returns the price of the day
  * Caches prices in node-persist

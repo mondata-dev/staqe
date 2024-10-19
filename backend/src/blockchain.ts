@@ -134,11 +134,18 @@ export async function getPaymentStatus(address: Address): Promise<any> {
   let paymentEndTS: number = 0;
   for (const payment of valdatorPayemnts) {
     if (convertNimiqTimestamp(payment.timestamp) > paymentEndTS) {
-      const addedTime = await getPaymentTime(payment.value, convertNimiqTimestamp(payment.timestamp));
+      const addedTime = await getPaymentTime(
+        payment.value,
+        convertNimiqTimestamp(payment.timestamp),
+      );
       paymentEndTS = convertNimiqTimestamp(payment.timestamp) + addedTime;
     } else {
       paymentEndTS =
-        paymentEndTS + (await getPaymentTime(payment.value, convertNimiqTimestamp(payment.timestamp)));
+        paymentEndTS +
+        (await getPaymentTime(
+          payment.value,
+          convertNimiqTimestamp(payment.timestamp),
+        ));
     }
   }
   return paymentEndTS;
