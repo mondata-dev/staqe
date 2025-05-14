@@ -23,12 +23,15 @@ import {
   upgradeNode,
 } from './nodecontroller.js';
 
+import { initRpcClient } from 'nimiq-rpc-client-ts';
 import type { Transaction } from 'nimiq-rpc-client-ts';
 
 const testMode = process.env.NODE_ENV === 'test';
 
 const jsonParser = bodyParser.json();
 const app = express();
+
+initRpcClient({ url: 'https://rpc.history.node.staqe.io/' })
 
 // request logging
 if (!testMode) {
