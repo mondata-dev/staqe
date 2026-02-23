@@ -1,6 +1,5 @@
-import * as k8s from '@kubernetes/client-node';
 import * as yaml from 'js-yaml';
-import { NimiqRPCClient as Client } from 'nimiq-rpc-client-ts';
+import { isConsensusEstablished } from 'nimiq-rpc-client-ts';
 import * as crypto from 'node:crypto';
 import { promises as fs } from 'node:fs';
 
@@ -136,11 +135,11 @@ export async function removeValidator(address: string) {
  * @returns
  */
 export async function getConsensusStatus(address: string) {
-  const url = new URL(`http://staqe-node-${kubernetizeAddress(address)}:8648`);
-  const client = new Client(url);
-  const response = await client.consensus.isConsensusEstablished();
-  if (response.data !== undefined) {
-    return response.data ? 'running' : 'creating';
+  const [reqIsOk, _error, consensusIsEstablished] = await isConsensusEstablished({
+    url: `http://staqe-node-${kubernetizeAddress(address)}:8648`
+  });
+  if (reqIsOk && consensusIsEstablished !== undefined) {
+    return consensusIsEstablished ? 'running' : 'creating';
   } else {
     return 'down';
   }

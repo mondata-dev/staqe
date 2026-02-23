@@ -1,10 +1,13 @@
-import type {
-  Address,
-  CallResult,
-  PartialBlock,
-  Transaction,
+import {
+  type RPCData,
+  type PartialBlock,
+  type Transaction,
+  getBlockByNumber,
+  getTransactionsByAddress,
+  getValidatorByAddress,
+  getTransactionByHash,
+  getBlockNumber,
 } from 'nimiq-rpc-client-ts';
-import { NimiqRPCClient as Client } from 'nimiq-rpc-client-ts';
 import { Buffer } from 'node:buffer';
 import { getDollarPriceHistory, lunaToNim } from './pricing.js';
 
@@ -29,20 +32,11 @@ function convertNimiqTimestamp(timestamp: bigint): number {
 }
 
 /**
- * Gets the RPC client to retrieve data from the blockchain
- * @returns
- */
-function getClient() {
-  const url = new URL('https://rpc.history.node.staqe.io/');
-  return new Client(url);
-}
-
-/**
  * Converts any valid address to the format used by the RPC client
  * @param address
  * @returns
  */
-export function convertAddressForRPC(address: string): Address {
+export function convertAddressForRPC(address: string): string {
   const upper = address.toUpperCase().replace(/ /g, '');
   const checksum = Number.parseInt(upper.substring(2, 4));
   const rest = upper.substring(4);
@@ -74,10 +68,8 @@ export async function getValidatorStatus(
  * @returns
  */
 export async function getBlock(blockNumber: number) {
-  const client = getClient();
-  const block: CallResult<PartialBlock> =
-    await client.blockchain.getBlockByNumber(blockNumber);
-  return block.data;
+  const [_isOk, _error, block] = await getBlockByNumber({ blockNumber });
+  return block as PartialBlock;
 }
 
 /**
@@ -105,16 +97,13 @@ async function getPaymentTime(amount: number, timestamp: number) {
  * @param address
  * @returns timestamp of when the payment ends
  */
-export async function getPaymentStatus(address: Address): Promise<any> {
+export async function getPaymentStatus(address: string): Promise<any> {
   // Format extra data: Staqe,NQ61 AE12 FJ43 QNP4 SHBJ F7XJ RH4Y FX3T X2N4
-  const client = getClient();
-  const payments: CallResult<Transaction[]> =
-    (await client.blockchain.getTransactionsByAddress(paymentReciver, {
-      startAt: null,
-      max: null,
-    })) as any;
+  const [_isOk, _error, payments] = await getTransactionsByAddress({
+      address: paymentReciver,
+    });
   const valdatorPayemnts = [];
-  for (const payment of payments.data) {
+  for (const payment of payments) {
     // Change of .data to .recipientData not yet implemented by the rpc client
     const decodedData = Buffer.from(
       (payment as any).recipientData,
@@ -157,21 +146,16 @@ export async function getPaymentStatus(address: Address): Promise<any> {
  * @returns
  */
 
-export async function getTotalRewards(validatorAddress: Address) {
-  const client = getClient();
-  const validator =
-    await client.blockchain.getValidatorByAddress(validatorAddress);
-  if (validator.error) {
-    console.log(`Failed to get Vlaidator ${validatorAddress}`);
+export async function getTotalRewards(validatorAddress: string) {
+  const [isOk, error, validator] = await getValidatorByAddress({ address: validatorAddress });
+  if (!isOk) {
+    console.log(`Failed to get Vlaidator ${validatorAddress}: ${error}`);
     return 0;
   }
-  const transactions: CallResult<Transaction[]> =
-    (await client.blockchain.getTransactionsByAddress(
-      validator.data.rewardAddress,
-      { startAt: null, max: null },
-    )) as CallResult<Transaction[]>;
+  const [_isOk, _error, transactions] = await getTransactionsByAddress({ address: validator.rewardAddress });
+    
   let total = 0;
-  for (const transaction of transactions.data) {
+  for (const transaction of transactions) {
     if (
       convertAddressForRPC(transaction.from) ===
       convertAddressForRPC('NQ81 C01N BASE 0000 0000 0000 0000 0000 0000')
@@ -188,10 +172,8 @@ export async function getTotalRewards(validatorAddress: Address) {
  * @returns
  */
 export async function getTransaction(transactionHash: string) {
-  const client = getClient();
-  const tx: CallResult<Transaction> =
-    await client.blockchain.getTransactionByHash(transactionHash);
-  return tx.data;
+  const [_isOk, _error, tx] = await getTransactionByHash({ hash: transactionHash });
+  return tx;
 }
 
 /**
@@ -199,8 +181,6 @@ export async function getTransaction(transactionHash: string) {
  * @returns block height
  */
 export async function getBlockHeight() {
-  const client = getClient();
-  const blockHeight: CallResult<number> =
-    await client.blockchain.getBlockNumber();
-  return blockHeight.data;
+  const [_isOk, _error, blockHeight] = await getBlockNumber();
+  return blockHeight;
 }
